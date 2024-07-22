@@ -25,7 +25,7 @@ public class GraphQLService {
   @Autowired
   StockDataFetcher stockFetcher;
 
-  @Value("schema.graphql")
+  @Value("templates/stockData.graphql")
   private ClassPathResource classPathLoader;
 
   @PostConstruct
