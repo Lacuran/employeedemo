@@ -1,0 +1,18 @@
+schema {
+    query: Query
+}
+type Query {
+    stocks: [StockMapper]
+}
+type StockMapper {
+    ticker: String
+    stockValue: String
+    volume: String
+    averageVolume: String
+    PE_Ratio: String
+    EPS: String
+    dividend: String
+    marketCap: String
+    previousOpen: String
+    previousClose: String
+}
