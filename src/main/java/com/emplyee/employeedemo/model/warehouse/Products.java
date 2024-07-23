@@ -3,6 +3,7 @@ package com.emplyee.employeedemo.model.warehouse;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -20,7 +21,7 @@ public class Products {
   private String description;
 
   @Column(name = "price", nullable = false)
-  private double price;
+  private BigDecimal price;
 
   @Column(name = "quantity", nullable = false)
   private int quantity;
