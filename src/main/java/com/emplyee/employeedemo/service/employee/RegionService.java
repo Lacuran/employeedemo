@@ -18,7 +18,7 @@ public class RegionService {
     return regionRepository.findAll();
   }
 
-  public Regions findRegionById(int id) {
+  public Regions getRegionById(int id) {
     return regionRepository.findById(id).orElse(null);
   }
 
