@@ -3,8 +3,6 @@ package com.emplyee.employeedemo.model.employee;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @Entity
 @Table(name = "locations")
@@ -29,6 +27,4 @@ public class Locations {
   @JoinColumn(name = "country_id", nullable = false)
   private Countries countries;
 
-  @OneToMany(mappedBy = "locations")
-  private List<Departments> departments;
 }

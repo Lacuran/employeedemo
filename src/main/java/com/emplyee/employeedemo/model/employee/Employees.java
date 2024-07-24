@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @Entity
@@ -49,7 +48,4 @@ public class Employees {
 
   @Column(name = "commission_pct")
   private BigDecimal commission_pct;
-
-  @OneToMany(mappedBy = "manager")
-  private List<Employees> subordinates;
 }

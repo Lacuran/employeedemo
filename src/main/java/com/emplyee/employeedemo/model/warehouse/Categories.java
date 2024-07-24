@@ -3,8 +3,6 @@ package com.emplyee.employeedemo.model.warehouse;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @Entity
 @Table(name = "categories")
@@ -18,7 +16,4 @@ public class Categories {
 
   @Column(name = "description")
   private String description;
-
-  @OneToMany(mappedBy = "categories")
-  private List<Products> products;
 }

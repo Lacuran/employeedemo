@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 
 @Data
@@ -24,6 +23,4 @@ public class Jobs {
   @Column(name = "max_salary")
   private BigDecimal max_salary;
 
-  @OneToMany(mappedBy = "jobs")
-  private List<Employees> employees;
 }

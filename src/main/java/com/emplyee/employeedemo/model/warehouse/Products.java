@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @Entity
@@ -29,8 +28,5 @@ public class Products {
   @ManyToOne
   @JoinColumn(name = "category_id", nullable = false)
   private Categories categories;
-
-  @OneToMany(mappedBy = "products")
-  private List<Inventory> inventoryList;
 
 }

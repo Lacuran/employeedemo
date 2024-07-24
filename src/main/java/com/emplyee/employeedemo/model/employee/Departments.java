@@ -3,8 +3,6 @@ package com.emplyee.employeedemo.model.employee;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @Entity
 @Table(name = "departments")
@@ -19,8 +17,5 @@ public class Departments {
   @ManyToOne
   @JoinColumn(name = "location_id", nullable = false)
   private Locations locations;
-
-  @OneToMany(mappedBy = "departments")
-  private List<Employees> employees;
 
 }
