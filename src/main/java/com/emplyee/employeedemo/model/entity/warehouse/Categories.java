@@ -1,17 +1,19 @@
-package com.emplyee.employeedemo.model.employee;
-
+package com.emplyee.employeedemo.model.entity.warehouse;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "regions")
-public class Regions {
+@Table(name = "categories")
+public class Categories {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
   @Column(name = "name", nullable = false)
   private String name;
+
+  @Column(name = "description")
+  private String description;
 }

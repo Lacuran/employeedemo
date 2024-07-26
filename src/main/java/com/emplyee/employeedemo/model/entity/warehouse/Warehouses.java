@@ -1,12 +1,12 @@
-package com.emplyee.employeedemo.model.employee;
+package com.emplyee.employeedemo.model.entity.warehouse;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "countries")
-public class Countries {
+@Table(name = "warehouses")
+public class Warehouses {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -14,7 +14,6 @@ public class Countries {
   @Column(name = "name", nullable = false)
   private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "region_id", nullable = false)
-  private Regions regions;
+  @Column(name = "location", nullable = false)
+  private String location;
 }

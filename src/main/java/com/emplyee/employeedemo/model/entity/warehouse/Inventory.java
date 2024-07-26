@@ -1,4 +1,4 @@
-package com.emplyee.employeedemo.model.warehouse;
+package com.emplyee.employeedemo.model.entity.warehouse;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,6 +1,8 @@
 package com.emplyee.employeedemo.controller.employee;
 
-import com.emplyee.employeedemo.model.employee.Regions;
+import com.emplyee.employeedemo.model.dto.employee.create.RegionCreateRequest;
+import com.emplyee.employeedemo.model.dto.employee.update.RegionUpdateRequest;
+import com.emplyee.employeedemo.model.entity.employee.Regions;
 import com.emplyee.employeedemo.service.employee.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,15 +34,14 @@ public class RegionController {
   }
 
   @PostMapping
-  public ResponseEntity<Regions> createRegion(@RequestBody Regions regions) {
-    Regions createRegion = regionService.createRegion(regions);
+  public ResponseEntity<Regions> createRegion(@RequestBody RegionCreateRequest request) {
+    Regions createRegion = regionService.createRegion(request);
     return ResponseEntity.status(HttpStatus.CREATED).body(createRegion);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Regions> updateRegion(@PathVariable("id") int id, @RequestBody Regions regions) {
-    Regions updateRegion = regionService.updateRegionById(id, regions.getName());
-
+  public ResponseEntity<Regions> updateRegion(@PathVariable("id") int id, @RequestBody RegionUpdateRequest request) {
+    Regions updateRegion = regionService.updateRegionById(id, request);
     if (updateRegion != null) {
       return ResponseEntity.ok(updateRegion);
     }

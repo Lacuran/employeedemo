@@ -1,6 +1,6 @@
 package com.emplyee.employeedemo.repository.employee;
 
-import com.emplyee.employeedemo.model.employee.Jobs;
+import com.emplyee.employeedemo.model.entity.employee.Jobs;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

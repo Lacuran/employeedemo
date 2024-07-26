@@ -1,6 +1,8 @@
 package com.emplyee.employeedemo.controller.employee;
 
-import com.emplyee.employeedemo.model.employee.Jobs;
+import com.emplyee.employeedemo.model.dto.employee.create.JobCreateRequest;
+import com.emplyee.employeedemo.model.dto.employee.update.JobUpdateRequest;
+import com.emplyee.employeedemo.model.entity.employee.Jobs;
 import com.emplyee.employeedemo.service.employee.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,17 +44,13 @@ public class JobController {
 
   @PostMapping
   public ResponseEntity<Jobs> createJob(@RequestBody Jobs jobs) {
-    Jobs createJob = jobService.createJob(jobs);
-    return ResponseEntity.status(HttpStatus.CREATED).body(createJob);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(jobs);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Jobs> updateJob(@PathVariable("id") int id, @RequestBody Jobs jobs) {
-    Jobs updateJob = jobService.updateJob(id,
-        jobs.getTitle(),
-        jobs.getMin_salary(),
-        jobs.getMax_salary());
-
+  public ResponseEntity<Jobs> updateJob(@PathVariable("id") int id, @RequestBody JobUpdateRequest request) {
+    Jobs updateJob = jobService.updateJob(id, request);
     if (updateJob != null) {
       return ResponseEntity.ok(updateJob);
     }

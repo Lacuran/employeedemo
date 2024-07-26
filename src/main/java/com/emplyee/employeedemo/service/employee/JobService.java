@@ -1,11 +1,13 @@
 package com.emplyee.employeedemo.service.employee;
 
-import com.emplyee.employeedemo.model.employee.Jobs;
+import com.emplyee.employeedemo.mapper.employee.JobMapper;
+import com.emplyee.employeedemo.model.dto.employee.create.JobCreateRequest;
+import com.emplyee.employeedemo.model.dto.employee.update.JobUpdateRequest;
+import com.emplyee.employeedemo.model.entity.employee.Jobs;
 import com.emplyee.employeedemo.repository.employee.JobsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +17,9 @@ public class JobService {
   @Autowired
   private JobsRepository jobsRepository;
 
+  @Autowired
+  private JobMapper jobMapper;
+
   public List<Jobs> getAllJobs() {
     return jobsRepository.findAll();
   }
@@ -23,8 +28,9 @@ public class JobService {
     return jobsRepository.findById(id).orElse(null);
   }
 
-  public Jobs createJob(Jobs jobs) {
-    return jobsRepository.save(jobs);
+  public Jobs createJob(Jobs request) {
+//    Jobs jobs = jo.createEntity(request);
+    return jobsRepository.save(request);
   }
 
   public Boolean deleteJob(int id) {
@@ -39,21 +45,12 @@ public class JobService {
     return jobsRepository.findByTitle(title);
   }
 
-  public Jobs updateJob(int id, String title, BigDecimal minSalary, BigDecimal maxSalary) {
+  public Jobs updateJob(int id, JobUpdateRequest request) {
     Optional<Jobs> optionalJobs = jobsRepository.findById(id);
 
     if (optionalJobs.isPresent()) {
       Jobs jobs = optionalJobs.get();
-
-      if (title != null && !title.trim().isEmpty()) {
-        jobs.setTitle(title);
-      }
-      if (minSalary != null) {
-        jobs.setMin_salary(minSalary);
-      }
-      if (maxSalary != null) {
-        jobs.setMax_salary(maxSalary);
-      }
+      jobMapper.updateEntity(request, jobs);
       return jobsRepository.save(jobs);
     }
     return null;

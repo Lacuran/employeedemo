@@ -1,6 +1,9 @@
 package com.emplyee.employeedemo.service.employee;
 
-import com.emplyee.employeedemo.model.employee.Regions;
+import com.emplyee.employeedemo.mapper.employee.RegionMapper;
+import com.emplyee.employeedemo.model.dto.employee.create.RegionCreateRequest;
+import com.emplyee.employeedemo.model.dto.employee.update.RegionUpdateRequest;
+import com.emplyee.employeedemo.model.entity.employee.Regions;
 import com.emplyee.employeedemo.repository.employee.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,9 @@ public class RegionService {
   @Autowired
   private RegionRepository regionRepository;
 
+  @Autowired
+  private RegionMapper regionMapper;
+
   public List<Regions> getAllRegions() {
     return regionRepository.findAll();
   }
@@ -22,7 +28,8 @@ public class RegionService {
     return regionRepository.findById(id).orElse(null);
   }
 
-  public Regions createRegion(Regions regions) {
+  public Regions createRegion(RegionCreateRequest request) {
+    Regions regions = regionMapper.createEntity(request);
     return regionRepository.save(regions);
   }
 
@@ -34,15 +41,12 @@ public class RegionService {
     return false;
   }
 
-  public Regions updateRegionById(int id, String name) {
+  public Regions updateRegionById(int id, RegionUpdateRequest request) {
     Optional<Regions> optionalRegions = regionRepository.findById(id);
 
     if (optionalRegions.isPresent()) {
       Regions regions = optionalRegions.get();
-
-      if (name != null && !name.trim().isEmpty()) {
-        regions.setName(name);
-      }
+      regionMapper.updateRegion(request, regions);
       return regionRepository.save(regions);
     }
     return null;
