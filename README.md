@@ -29,6 +29,7 @@ http://localhost:8080/employee-demo/api-docs
 2. ~~Create DB for basic CRUD Operation~~
 3. ~~Create models for each table~~
 4. Create separate repo for tests with rest assured, and BDD approach
+5. Add liquibase script to reset and setup DB
 
 ### DB Workflow for Employee Table
 
