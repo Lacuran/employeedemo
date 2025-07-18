@@ -1,17 +1,23 @@
 package com.emplyee.employeedemo.model.employee;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 
-@Data
 @Entity
 @Table(name = "jobs")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Jobs {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private int id;
 
   @Column(name = "title", nullable = false)

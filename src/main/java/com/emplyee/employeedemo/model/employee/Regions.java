@@ -3,11 +3,15 @@ package com.emplyee.employeedemo.model.employee;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
 @Entity
 @Table(name = "regions")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Regions {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
