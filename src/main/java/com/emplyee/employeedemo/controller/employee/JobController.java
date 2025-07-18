@@ -1,7 +1,6 @@
 package com.emplyee.employeedemo.controller.employee;
 
 import com.emplyee.employeedemo.model.employee.Jobs;
-import com.emplyee.employeedemo.model.employee.Regions;
 import com.emplyee.employeedemo.service.employee.JobService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -35,7 +34,7 @@ public class JobController {
   }
 
   @GetMapping("/{id}")
-  @Operation(summary = "Get job by id")
+  @Operation(summary = "Get job by ID")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Job found",
           content = @Content(mediaType = "application/json",
@@ -67,11 +66,11 @@ public class JobController {
   }
 
   @PostMapping
-  @Operation(summary = "Create a new region")
+  @Operation(summary = "Create a new job")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "201", description = "Job created",
           content = @Content(mediaType = "application/json",
-              schema = @Schema(implementation = Regions.class))),
+              schema = @Schema(implementation = Jobs.class))),
       @ApiResponse(responseCode = "400", description = "Invalid input")
   })
   public ResponseEntity<Jobs> createJob(@RequestBody Jobs jobs) {
@@ -84,8 +83,8 @@ public class JobController {
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Job updated",
           content = @Content(mediaType = "application/json",
-              schema = @Schema(implementation = Regions.class))),
-      @ApiResponse(responseCode = "404", description = "Region not found")
+              schema = @Schema(implementation = Jobs.class))),
+      @ApiResponse(responseCode = "404", description = "Job not found")
   })
   public ResponseEntity<Jobs> updateJob(@PathVariable("id") int id, @RequestBody Jobs jobs) {
     Jobs updateJob = jobService.updateJob(id,
