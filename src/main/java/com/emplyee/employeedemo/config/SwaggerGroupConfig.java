@@ -22,4 +22,12 @@ public class SwaggerGroupConfig {
         .pathsToMatch("/api/jobs/**")
         .build();
   }
+
+  @Bean
+  public GroupedOpenApi countryApi() {
+    return GroupedOpenApi.builder()
+        .group("Country API")
+        .pathsToMatch("/api/country/**")
+        .build();
+  }
 }
