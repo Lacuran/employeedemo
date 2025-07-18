@@ -17,7 +17,7 @@ http://localhost:8080/employee-demo/api-docs
    1. Employee:
       1. ~~Jobs~~,
       2. ~~Region~~,
-      3. Countries,
+      3. ~~Countries~~,
       4. Locations,
       5. Departments,
       6. Employee
