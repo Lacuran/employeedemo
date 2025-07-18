@@ -1,4 +1,4 @@
-package com.emplyee.employeedemo.dto.request;
+package com.emplyee.employeedemo.dto.request.put;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;

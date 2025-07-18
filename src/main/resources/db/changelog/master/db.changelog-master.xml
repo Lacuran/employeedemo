@@ -8,4 +8,6 @@
 
   <include file="db/changelog/changesets/add-country-fk-to-regions.xml"/>
   <include file="db/changelog/changesets/remove-region-id-from-countries.xml"/>
+  <include file="db/changelog/changesets/truncate-data-postgres.xml"/>
+
 </databaseChangeLog>

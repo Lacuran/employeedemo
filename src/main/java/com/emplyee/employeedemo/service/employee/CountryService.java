@@ -1,6 +1,7 @@
 package com.emplyee.employeedemo.service.employee;
 
-import com.emplyee.employeedemo.dto.request.CountryCreateDTO;
+import com.emplyee.employeedemo.dto.request.post.CountryCreateDTO;
+import com.emplyee.employeedemo.dto.request.put.CountryUpdateDTO;
 import com.emplyee.employeedemo.model.employee.Countries;
 import com.emplyee.employeedemo.repository.employee.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CountryService {
@@ -31,19 +31,15 @@ public class CountryService {
     return countryRepository.save(country);
   }
 
-  public Countries updateCountry(int id, String name) {
-    Optional<Countries> optionalCountries = countryRepository.findById(id);
+  public Countries updateCountry(int id, CountryUpdateDTO dto) {
+    Countries country = countryRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Country not found"));
 
-    if (optionalCountries.isPresent()) {
-      Countries countries = optionalCountries.get();
-
-      if (name != null && !name.trim().isEmpty()) {
-        countries.setName(name);
-      }
-      return countryRepository.save(countries);
+    String countryName = dto.getName();
+    if (countryName != null && !countryName.trim().isEmpty()) {
+      country.setName(countryName);
     }
-
-    return null;
+    return countryRepository.save(country);
   }
 
   public Boolean deleteCountry(int id) {

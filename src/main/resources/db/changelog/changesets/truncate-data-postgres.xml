@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+  <changeSet id="truncate-data-pg-001" author="kornel">
+    <comment>Usunięcie danych i reset sekwencji dla PostgreSQL</comment>
+
+    <!-- Usunięcie danych -->
+    <sql>DELETE FROM regions;</sql>
+    <sql>DELETE FROM countries;</sql>
+
+    <!-- Reset sekwencji ID -->
+    <sql>ALTER SEQUENCE regions_id_seq RESTART WITH 1;</sql>
+    <sql>ALTER SEQUENCE countries_id_seq RESTART WITH 1;</sql>
+  </changeSet>
+
+</databaseChangeLog>

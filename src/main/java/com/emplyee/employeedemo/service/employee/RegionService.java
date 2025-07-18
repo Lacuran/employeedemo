@@ -1,7 +1,7 @@
 package com.emplyee.employeedemo.service.employee;
 
-import com.emplyee.employeedemo.dto.request.RegionCreateDTO;
-import com.emplyee.employeedemo.dto.request.RegionUpdateDTO;
+import com.emplyee.employeedemo.dto.request.post.RegionCreateDTO;
+import com.emplyee.employeedemo.dto.request.put.RegionUpdateDTO;
 import com.emplyee.employeedemo.model.employee.Countries;
 import com.emplyee.employeedemo.model.employee.Regions;
 import com.emplyee.employeedemo.repository.employee.CountryRepository;
@@ -26,7 +26,9 @@ public class RegionService {
   }
 
   public Regions getRegionById(int id) {
-    return regionRepository.findById(id).orElse(null);
+    return regionRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Region not found"));
+
   }
 
   public Regions createRegion(RegionCreateDTO dto) {

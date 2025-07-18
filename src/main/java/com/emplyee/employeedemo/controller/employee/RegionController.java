@@ -1,7 +1,7 @@
 package com.emplyee.employeedemo.controller.employee;
 
-import com.emplyee.employeedemo.dto.request.RegionCreateDTO;
-import com.emplyee.employeedemo.dto.request.RegionUpdateDTO;
+import com.emplyee.employeedemo.dto.request.post.RegionCreateDTO;
+import com.emplyee.employeedemo.dto.request.put.RegionUpdateDTO;
 import com.emplyee.employeedemo.dto.resposce.RegionDTO;
 import com.emplyee.employeedemo.model.employee.Regions;
 import com.emplyee.employeedemo.service.employee.RegionService;
@@ -45,10 +45,11 @@ public class RegionController {
               schema = @Schema(implementation = Regions.class))),
       @ApiResponse(responseCode = "404", description = "Region not found")
   })
-  public ResponseEntity<Regions> getRegionById(@PathVariable("id") int id) {
-    Regions regions = regionService.getRegionById(id);
-    if (regions != null) {
-      return ResponseEntity.ok(regions);
+  public ResponseEntity<RegionDTO> getRegionById(@PathVariable int id) {
+    Regions region = regionService.getRegionById(id);
+
+    if (region != null) {
+      return ResponseEntity.ok(new RegionDTO(region));
     }
     return ResponseEntity.notFound().build();
   }

@@ -1,4 +1,4 @@
-package com.emplyee.employeedemo.dto.request;
+package com.emplyee.employeedemo.dto.request.post;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

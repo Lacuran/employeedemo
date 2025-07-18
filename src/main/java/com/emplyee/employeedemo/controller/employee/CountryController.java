@@ -1,6 +1,7 @@
 package com.emplyee.employeedemo.controller.employee;
 
-import com.emplyee.employeedemo.dto.request.CountryCreateDTO;
+import com.emplyee.employeedemo.dto.request.post.CountryCreateDTO;
+import com.emplyee.employeedemo.dto.request.put.CountryUpdateDTO;
 import com.emplyee.employeedemo.dto.resposce.CountryListDTO;
 import com.emplyee.employeedemo.dto.resposce.CountryResponseDTO;
 import com.emplyee.employeedemo.model.employee.Countries;
@@ -70,7 +71,7 @@ public class CountryController {
     return ResponseEntity.status(HttpStatus.CREATED).body(new CountryResponseDTO(createCountry));
   }
 
-  @PutMapping
+  @PutMapping("/{id}")
   @Operation(summary = "Update country by ID")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Country updated",
@@ -78,12 +79,11 @@ public class CountryController {
               schema = @Schema(implementation = Countries.class))),
       @ApiResponse(responseCode = "404", description = "Country not found")
   })
-  public ResponseEntity<Countries> updateCountry(@PathVariable("id") int id, @RequestBody Countries country) {
-    Countries updateCountry = countryService.updateCountry(id,
-        country.getName());
+  public ResponseEntity<CountryResponseDTO> updateCountry(@PathVariable int id, @RequestBody @Valid CountryUpdateDTO dto) {
+    Countries updateCountry = countryService.updateCountry(id, dto);
 
     if (updateCountry != null) {
-      return ResponseEntity.ok(updateCountry);
+      return ResponseEntity.ok(new CountryResponseDTO(updateCountry));
     }
     return ResponseEntity.notFound().build();
   }
