@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "countries")
@@ -21,8 +23,8 @@ public class Countries {
   @Column(name = "name", nullable = false)
   private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "region_id", nullable = false)
+  @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-  private Regions regions;
+  private List<Regions> regions;
+
 }

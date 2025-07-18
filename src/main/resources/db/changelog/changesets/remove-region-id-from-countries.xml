@@ -5,7 +5,11 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
+  <changeSet id="remove-region-id-from-countries" author="kornel">
+    <dropForeignKeyConstraint
+        baseTableName="countries"
+        constraintName="fk_region"/>
 
-  <include file="db/changelog/changesets/add-country-fk-to-regions.xml"/>
-  <include file="db/changelog/changesets/remove-region-id-from-countries.xml"/>
+    <dropColumn tableName="countries" columnName="region_id"/>
+  </changeSet>
 </databaseChangeLog>

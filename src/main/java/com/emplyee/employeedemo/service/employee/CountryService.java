@@ -1,5 +1,6 @@
 package com.emplyee.employeedemo.service.employee;
 
+import com.emplyee.employeedemo.dto.request.CountryCreateDTO;
 import com.emplyee.employeedemo.model.employee.Countries;
 import com.emplyee.employeedemo.repository.employee.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,10 @@ public class CountryService {
     return countryRepository.findById(id).orElse(null);
   }
 
-  public Countries createCountry(Countries countries) {
-    return countryRepository.save(countries);
+  public Countries createCountry(CountryCreateDTO dto) {
+    Countries country = new Countries();
+    country.setName(dto.getName());
+    return countryRepository.save(country);
   }
 
   public Countries updateCountry(int id, String name) {

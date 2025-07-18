@@ -1,5 +1,8 @@
 package com.emplyee.employeedemo.controller.employee;
 
+import com.emplyee.employeedemo.dto.request.CountryCreateDTO;
+import com.emplyee.employeedemo.dto.resposce.CountryListDTO;
+import com.emplyee.employeedemo.dto.resposce.CountryResponseDTO;
 import com.emplyee.employeedemo.model.employee.Countries;
 import com.emplyee.employeedemo.service.employee.CountryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +32,12 @@ public class CountryController {
   @ApiResponse(responseCode = "200", description = "List of countries",
       content = @Content(mediaType = "application/json",
           schema = @Schema(implementation = Countries.class)))
-  public ResponseEntity<List<Countries>> getAllCountries() {
-    List<Countries> countries = countryService.getAllCountries();
+  public ResponseEntity<List<CountryListDTO>> getAllCountries() {
+    List<CountryListDTO> countries = countryService.getAllCountries().stream()
+        .map(CountryListDTO::new)
+        .toList();
     return ResponseEntity.ok(countries);
+
   }
 
   @GetMapping("/{id}")
@@ -41,12 +48,13 @@ public class CountryController {
               schema = @Schema(implementation = Countries.class))),
       @ApiResponse(responseCode = "404", description = "Country not found")
   })
-  public ResponseEntity<Countries> getCountryById(@PathVariable("id") int id) {
-    Countries countries = countryService.getCountryById(id);
-    if (countries != null) {
-      return ResponseEntity.ok(countries);
+  public ResponseEntity<CountryResponseDTO> getCountry(@PathVariable int id) {
+    Countries country = countryService.getCountryById(id);
+    if (country != null) {
+      return ResponseEntity.ok(new CountryResponseDTO(country));
     }
     return ResponseEntity.notFound().build();
+
   }
 
   @PostMapping
@@ -57,9 +65,9 @@ public class CountryController {
               schema = @Schema(implementation = Countries.class))),
       @ApiResponse(responseCode = "400", description = "Invalid input")
   })
-  public ResponseEntity<Countries> createCountry(@RequestBody Countries country) {
-    Countries createCountry = countryService.createCountry(country);
-    return ResponseEntity.status(HttpStatus.CREATED).body(createCountry);
+  public ResponseEntity<CountryResponseDTO> createCountry(@RequestBody @Valid CountryCreateDTO dto) {
+    Countries createCountry = countryService.createCountry(dto);
+    return ResponseEntity.status(HttpStatus.CREATED).body(new CountryResponseDTO(createCountry));
   }
 
   @PutMapping

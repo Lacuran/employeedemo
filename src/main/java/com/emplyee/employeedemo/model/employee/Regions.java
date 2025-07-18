@@ -1,6 +1,7 @@
 package com.emplyee.employeedemo.model.employee;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,7 +12,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "country")
 public class Regions {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,4 +21,10 @@ public class Regions {
 
   @Column(name = "name", nullable = false)
   private String name;
+
+  @ManyToOne
+  @JoinColumn(name = "country_id", nullable = false)
+  @JsonIgnore
+  private Countries country;
+
 }
