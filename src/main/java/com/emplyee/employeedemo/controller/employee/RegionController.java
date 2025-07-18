@@ -57,7 +57,6 @@ public class RegionController {
               schema = @Schema(implementation = Regions.class))),
       @ApiResponse(responseCode = "400", description = "Invalid input")
   })
-
   public ResponseEntity<Regions> createRegion(@RequestBody Regions regions) {
     Regions createRegion = regionService.createRegion(regions);
     return ResponseEntity.status(HttpStatus.CREATED).body(createRegion);
