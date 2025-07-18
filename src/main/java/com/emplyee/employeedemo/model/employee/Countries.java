@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,6 +26,6 @@ public class Countries {
 
   @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-  private List<Regions> regions;
+  private List<Regions> regions = new ArrayList<>();
 
 }

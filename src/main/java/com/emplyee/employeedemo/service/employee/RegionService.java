@@ -1,18 +1,25 @@
 package com.emplyee.employeedemo.service.employee;
 
+import com.emplyee.employeedemo.dto.request.RegionCreateDTO;
+import com.emplyee.employeedemo.dto.request.RegionUpdateDTO;
+import com.emplyee.employeedemo.model.employee.Countries;
 import com.emplyee.employeedemo.model.employee.Regions;
+import com.emplyee.employeedemo.repository.employee.CountryRepository;
 import com.emplyee.employeedemo.repository.employee.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RegionService {
 
   @Autowired
   private RegionRepository regionRepository;
+
+  @Autowired
+  private CountryRepository countryRepository;
+
 
   public List<Regions> getAllRegions() {
     return regionRepository.findAll();
@@ -22,9 +29,17 @@ public class RegionService {
     return regionRepository.findById(id).orElse(null);
   }
 
-  public Regions createRegion(Regions regions) {
-    return regionRepository.save(regions);
+  public Regions createRegion(RegionCreateDTO dto) {
+    Countries country = countryRepository.findById(dto.getCountryId())
+        .orElseThrow(() -> new RuntimeException("Country not found"));
+
+    Regions region = new Regions();
+    region.setName(dto.getName());
+    region.setCountry(country);
+
+    return regionRepository.save(region);
   }
+
 
   public Boolean deleteRegion(int id) {
     if (regionRepository.existsById(id)) {
@@ -34,17 +49,17 @@ public class RegionService {
     return false;
   }
 
-  public Regions updateRegionById(int id, String name) {
-    Optional<Regions> optionalRegions = regionRepository.findById(id);
+  public Regions updateRegion(int id, RegionUpdateDTO dto) {
+    Regions region = regionRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Region not found"));
 
-    if (optionalRegions.isPresent()) {
-      Regions regions = optionalRegions.get();
+    Countries country = countryRepository.findById(dto.getCountryId())
+        .orElseThrow(() -> new RuntimeException("Country not found"));
 
-      if (name != null && !name.trim().isEmpty()) {
-        regions.setName(name);
-      }
-      return regionRepository.save(regions);
-    }
-    return null;
+    region.setName(dto.getName());
+    region.setCountry(country);
+
+    return regionRepository.save(region);
+
   }
 }

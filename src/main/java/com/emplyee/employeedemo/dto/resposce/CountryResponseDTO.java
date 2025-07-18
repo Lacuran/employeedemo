@@ -17,9 +17,9 @@ public class CountryResponseDTO {
   public CountryResponseDTO(Countries country) {
     this.id = country.getId();
     this.name = country.getName();
-    this.regions = country.getRegions().stream()
+    this.regions = country.getRegions() != null ? country.getRegions().stream()
         .map(RegionDTO::new)
-        .toList();
+        .toList() : List.of();
 
   }
 

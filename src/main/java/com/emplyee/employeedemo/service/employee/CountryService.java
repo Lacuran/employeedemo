@@ -6,6 +6,7 @@ import com.emplyee.employeedemo.repository.employee.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,7 @@ public class CountryService {
   public Countries createCountry(CountryCreateDTO dto) {
     Countries country = new Countries();
     country.setName(dto.getName());
+    country.setRegions(new ArrayList<>());
     return countryRepository.save(country);
   }
 

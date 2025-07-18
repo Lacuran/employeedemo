@@ -1,5 +1,8 @@
 package com.emplyee.employeedemo.controller.employee;
 
+import com.emplyee.employeedemo.dto.request.RegionCreateDTO;
+import com.emplyee.employeedemo.dto.request.RegionUpdateDTO;
+import com.emplyee.employeedemo.dto.resposce.RegionDTO;
 import com.emplyee.employeedemo.model.employee.Regions;
 import com.emplyee.employeedemo.service.employee.RegionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,9 +61,9 @@ public class RegionController {
               schema = @Schema(implementation = Regions.class))),
       @ApiResponse(responseCode = "400", description = "Invalid input")
   })
-  public ResponseEntity<Regions> createRegion(@RequestBody Regions regions) {
-    Regions createRegion = regionService.createRegion(regions);
-    return ResponseEntity.status(HttpStatus.CREATED).body(createRegion);
+  public ResponseEntity<RegionDTO> createRegion(@RequestBody @Valid RegionCreateDTO dto) {
+    Regions createRegion = regionService.createRegion(dto);
+    return ResponseEntity.status(HttpStatus.CREATED).body(new RegionDTO(createRegion));
   }
 
   @PutMapping("/{id}")
@@ -70,11 +74,11 @@ public class RegionController {
               schema = @Schema(implementation = Regions.class))),
       @ApiResponse(responseCode = "404", description = "Region not found")
   })
-  public ResponseEntity<Regions> updateRegion(@PathVariable("id") int id, @RequestBody Regions regions) {
-    Regions updateRegion = regionService.updateRegionById(id, regions.getName());
+  public ResponseEntity<RegionDTO> updateRegion(@PathVariable int id, @RequestBody @Valid RegionUpdateDTO dto) {
+    Regions updateRegion = regionService.updateRegion(id, dto);
 
     if (updateRegion != null) {
-      return ResponseEntity.ok(updateRegion);
+      return ResponseEntity.ok(new RegionDTO(updateRegion));
     }
     return ResponseEntity.notFound().build();
   }
