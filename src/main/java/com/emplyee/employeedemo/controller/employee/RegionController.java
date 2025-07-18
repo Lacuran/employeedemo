@@ -34,7 +34,7 @@ public class RegionController {
   }
 
   @GetMapping("/{id}")
-  @Operation(summary = "Get region by id")
+  @Operation(summary = "Get region by ID")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Region found",
           content = @Content(mediaType = "application/json",
