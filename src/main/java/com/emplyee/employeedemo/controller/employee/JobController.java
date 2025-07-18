@@ -2,6 +2,7 @@ package com.emplyee.employeedemo.controller.employee;
 
 import com.emplyee.employeedemo.model.employee.Jobs;
 import com.emplyee.employeedemo.service.employee.JobService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobs")
+@Tag(name = "Jobs API", description = "Operations related to jobs")
 public class JobController {
 
   @Autowired
