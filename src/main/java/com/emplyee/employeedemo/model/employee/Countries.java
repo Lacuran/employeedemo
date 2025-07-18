@@ -1,11 +1,16 @@
 package com.emplyee.employeedemo.model.employee;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+
 @Entity
 @Table(name = "countries")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Countries {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
