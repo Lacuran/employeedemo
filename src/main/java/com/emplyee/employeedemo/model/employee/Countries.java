@@ -23,5 +23,6 @@ public class Countries {
 
   @ManyToOne
   @JoinColumn(name = "region_id", nullable = false)
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private Regions regions;
 }

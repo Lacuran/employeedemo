@@ -1,7 +1,6 @@
 package com.emplyee.employeedemo.service.employee;
 
 import com.emplyee.employeedemo.model.employee.Countries;
-import com.emplyee.employeedemo.model.employee.Regions;
 import com.emplyee.employeedemo.repository.employee.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +26,17 @@ public class CountryService {
     return countryRepository.save(countries);
   }
 
-  public Countries updateCountry(int id, String name, Regions regions) {
+  public Countries updateCountry(int id, String name) {
     Optional<Countries> optionalCountries = countryRepository.findById(id);
 
+    if (optionalCountries.isPresent()) {
+      Countries countries = optionalCountries.get();
+
+      if (name != null && !name.trim().isEmpty()) {
+        countries.setName(name);
+      }
+      return countryRepository.save(countries);
+    }
 
     return null;
   }

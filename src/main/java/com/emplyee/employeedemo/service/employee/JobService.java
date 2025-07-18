@@ -48,10 +48,10 @@ public class JobService {
       if (title != null && !title.trim().isEmpty()) {
         jobs.setTitle(title);
       }
-      if (minSalary != null) {
+      if (minSalary != null && minSalary.compareTo(BigDecimal.ZERO) >= 0) {
         jobs.setMin_salary(minSalary);
       }
-      if (maxSalary != null) {
+      if (maxSalary != null && maxSalary.compareTo(BigDecimal.ZERO) >= 0) {
         jobs.setMax_salary(maxSalary);
       }
       return jobsRepository.save(jobs);
