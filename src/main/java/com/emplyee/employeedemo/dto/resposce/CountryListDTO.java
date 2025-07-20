@@ -15,4 +15,7 @@ public class CountryListDTO {
     this.name = country.getName();
   }
 
+  public CountryListDTO(String name) {
+    this.name = name;
+  }
 }

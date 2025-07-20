@@ -30,4 +30,12 @@ public class SwaggerGroupConfig {
         .pathsToMatch("/api/country/**")
         .build();
   }
+
+  @Bean
+  public GroupedOpenApi locationApi() {
+    return GroupedOpenApi.builder()
+        .group("Location API")
+        .pathsToMatch("/api/locations/**")
+        .build();
+  }
 }
