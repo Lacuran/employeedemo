@@ -6,6 +6,7 @@ import com.emplyee.employeedemo.model.employee.Departments;
 import com.emplyee.employeedemo.model.employee.Locations;
 import com.emplyee.employeedemo.repository.employee.DepartmentRepository;
 import com.emplyee.employeedemo.repository.employee.LocationsRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +43,32 @@ public class DepartmentService {
 
   }
 
-  public DepartmentDTO updateDepartment(int id, DepartmentDTO dto)
+  public DepartmentDTO updateDepartment(int id, DepartmentDTO dto) {
+    Departments dept = departmentRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Department not found"));
+
+    Locations location = locationRepository.findById(dto.getLocationId())
+        .orElseThrow(() -> new RuntimeException("Location not found"));
+
+    Departments updated = departmentRepository.save(dept);
+    return new DepartmentDTO(updated.getId(), updated.getName(), updated.getLocations().getId());
+
+  }
+
+  public void updateName(int id, String name) {
+    Departments department = departmentRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Department not found"));
+
+    department.setName(name);
+    departmentRepository.save(department);
+  }
+
+  public void deleteDepartment(int id) {
+    if (!departmentRepository.existsById(id)) {
+      throw new EntityNotFoundException("Department not found");
+    }
+    departmentRepository.deleteById(id);
+  }
+
+
 }
