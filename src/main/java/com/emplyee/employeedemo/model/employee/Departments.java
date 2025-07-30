@@ -1,5 +1,6 @@
 package com.emplyee.employeedemo.model.employee;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +14,7 @@ import lombok.*;
 public class Departments {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private int id;
 
   @Column(name = "name", nullable = false)

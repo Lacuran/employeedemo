@@ -2,11 +2,17 @@ package com.emplyee.employeedemo.model.employee;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+import java.util.List;
+
 @Entity
 @Table(name = "locations")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Locations {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +34,9 @@ public class Locations {
   @ManyToOne
   @JoinColumn(name = "country_id", nullable = false)
   private Countries countries;
+
+  @OneToMany(mappedBy = "locations")
+  private List<Departments> departments;
+
 
 }

@@ -4,6 +4,9 @@ import com.emplyee.employeedemo.model.employee.Locations;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 @Setter
 public class LocationDTO {
@@ -13,6 +16,7 @@ public class LocationDTO {
   private String city;
   private String state_province;
   private CountryListDTO country;
+  private List<DepartmentBriefDTO> departments;
 
   public LocationDTO(Locations location) {
     this.id = location.getId();
@@ -23,6 +27,13 @@ public class LocationDTO {
     if (location.getCountries() != null) {
       this.country = new CountryListDTO(location.getCountries());
     }
+    if (location.getDepartments() != null) {
+      this.departments = location.getDepartments()
+          .stream()
+          .map(dept -> new DepartmentBriefDTO(dept.getId(), dept.getName()))
+          .collect(Collectors.toList());
+    }
+
   }
 
 }
