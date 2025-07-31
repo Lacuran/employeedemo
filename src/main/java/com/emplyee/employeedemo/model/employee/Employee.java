@@ -1,16 +1,23 @@
 package com.emplyee.employeedemo.model.employee;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 
-@Data
 @Entity
 @Table(name = "employees")
-public class Employees {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class Employee {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private int id;
 
   @Column(name = "first_name", nullable = false)
@@ -41,7 +48,8 @@ public class Employees {
 
   @ManyToOne
   @JoinColumn(name = "manager_id")
-  private Employees manager;
+  @JsonBackReference
+  private Employee manager;
 
   @Column(name = "salary")
   private BigDecimal salary;
