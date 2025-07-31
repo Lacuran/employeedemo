@@ -18,8 +18,8 @@ http://localhost:8080/employee-demo/api-docs
       1. ~~Jobs~~,
       2. ~~Region~~,
       3. ~~Countries~~,
-      4. Locations,
-      5. Departments,
+      4. ~~Locations~~,
+      5. ~~Departments~~,
       6. Employee
    2. Warehouse:
       1. Warehouses,

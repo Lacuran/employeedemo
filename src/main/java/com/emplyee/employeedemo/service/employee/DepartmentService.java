@@ -29,6 +29,18 @@ public class DepartmentService {
         .collect(Collectors.toList());
   }
 
+  public DepartmentDTO getDepartmentById(int id) {
+    Departments entity = departmentRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Department with ID " + id + " not found"));
+
+    DepartmentDTO dto = new DepartmentDTO();
+    dto.setId(entity.getId());
+    dto.setName(entity.getName());
+    dto.setLocationId(entity.getLocations().getId());
+
+    return dto;
+  }
+
   public DepartmentDTO createDepartment(DepartmentDTO dto) {
     Locations location = locationRepository.findById(dto.getLocationId())
         .orElseThrow(() -> new RuntimeException("Location not found"));
