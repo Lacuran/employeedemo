@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "employees")
@@ -36,7 +37,7 @@ public class Employee {
   private String phone_number;
 
   @Column(name = "hire_date")
-  private String hire_date;
+  private LocalDate hireDate;
 
   @ManyToOne
   @JoinColumn(name = "job_id", nullable = false)
