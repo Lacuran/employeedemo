@@ -1,5 +1,6 @@
 package com.emplyee.employeedemo.controller.employee;
 
+import com.emplyee.employeedemo.dto.request.post.EmployeeCreateDTO;
 import com.emplyee.employeedemo.dto.resposce.EmployeeDTO;
 import com.emplyee.employeedemo.model.employee.Employee;
 import com.emplyee.employeedemo.service.employee.EmployeeService;
@@ -10,11 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class EmployeeController {
   @ApiResponse(responseCode = "200", description = "List of all employees",
       content = @Content(mediaType = "application/json",
           schema = @Schema(implementation = EmployeeDTO.class)))
-  public ResponseEntity<List<EmployeeDTO>> getAllDepartments() {
+  public ResponseEntity<List<EmployeeDTO>> getAllEmployees() {
     List<EmployeeDTO> employees = employeeService.getAllEmployees();
     return ResponseEntity.ok(employees);
   }
@@ -45,8 +44,21 @@ public class EmployeeController {
               schema = @Schema(implementation = Employee.class))),
       @ApiResponse(responseCode = "404", description = "Employee not found")
   })
-  public ResponseEntity<EmployeeDTO> getDepartmentById(@PathVariable int id) {
+  public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable int id) {
     EmployeeDTO dto = employeeService.getEmployeeById(id);
     return ResponseEntity.ok(dto);
+  }
+
+  @PostMapping
+  @Operation(summary = "Create a new employee")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "201", description = "Employee created",
+          content = @Content(mediaType = "application/json",
+              schema = @Schema(implementation = Employee.class))),
+      @ApiResponse(responseCode = "400", description = "Invalid input")
+  })
+  public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeCreateDTO dto) {
+    EmployeeDTO created = employeeService.createEmployee(dto);
+    return ResponseEntity.status(HttpStatus.CREATED).body(created);
   }
 }
