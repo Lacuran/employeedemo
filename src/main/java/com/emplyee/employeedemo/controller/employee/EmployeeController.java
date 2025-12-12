@@ -49,6 +49,30 @@ public class EmployeeController {
     return ResponseEntity.ok(dto);
   }
 
+  @GetMapping("/{lastName}")
+  @Operation(summary = "Get employee by Last Name")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Employee found",
+          content = @Content(mediaType = "application/json",
+              schema = @Schema(implementation = Employee.class))),
+      @ApiResponse(responseCode = "404", description = "Employee not found")
+  })
+  public ResponseEntity<List<EmployeeDTO>> getEmployeeByLastName(@PathVariable String lastName) {
+    List<EmployeeDTO> dto = employeeService.findByLastName(lastName);
+    return ResponseEntity.ok(dto);
+  }
+
+  @DeleteMapping("/{id}")
+  @Operation(summary = "Delete employee by ID")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "204", description = "Employee deleted"),
+      @ApiResponse(responseCode = "404", description = "Employee not found")
+  })
+  public ResponseEntity<Void> deleteEmployee(@PathVariable int id) {
+    employeeService.deleteEmployee(id);
+    return ResponseEntity.noContent().build();
+  }
+
   @PostMapping
   @Operation(summary = "Create a new employee")
   @ApiResponses(value = {
