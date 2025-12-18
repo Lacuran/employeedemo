@@ -1,6 +1,7 @@
 package com.emplyee.employeedemo.controller.employee;
 
 import com.emplyee.employeedemo.dto.request.post.EmployeeCreateDTO;
+import com.emplyee.employeedemo.dto.request.put.EmployeeUpdateDTO;
 import com.emplyee.employeedemo.dto.resposce.EmployeeDTO;
 import com.emplyee.employeedemo.model.employee.Employee;
 import com.emplyee.employeedemo.service.employee.EmployeeService;
@@ -11,10 +12,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -75,6 +78,27 @@ public class EmployeeController {
     return ResponseEntity.ok(dto);
   }
 
+  @GetMapping("/search")
+  @Operation(summary = "Find Employees by Hire date")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Employees found",
+          content = @Content(mediaType = "application/json",
+              schema = @Schema(implementation = Employee.class))),
+      @ApiResponse(responseCode = "404", description = "Employee not found")
+  })
+  public ResponseEntity<List<EmployeeDTO>> getEmployeesByHireDate(
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+  ) {
+    List<EmployeeDTO> employees = employeeService.findByHireDateBetween(startDate, endDate);
+
+    if (employees.isEmpty()) {
+      return ResponseEntity.noContent().build();
+    }
+
+    return ResponseEntity.ok(employees);
+  }
+
   @DeleteMapping("/{id}")
   @Operation(summary = "Delete employee by ID")
   @ApiResponses(value = {
@@ -98,4 +122,30 @@ public class EmployeeController {
     EmployeeDTO created = employeeService.createEmployee(dto);
     return ResponseEntity.status(HttpStatus.CREATED).body(created);
   }
+
+  @PutMapping("/{id}")
+  @Operation(summary = "Update Employee by ID")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "204", description = "Employee updated",
+          content = @Content(mediaType = "application/json",
+              schema = @Schema(implementation = Employee.class))),
+      @ApiResponse(responseCode = "404", description = "Employee not found")
+  })
+  public ResponseEntity<Void> updateEmployee(@PathVariable int id, @RequestBody EmployeeUpdateDTO dto){
+    employeeService.updateEmployee(dto);
+    return ResponseEntity.noContent().build();
+  }
+
+  @GetMapping("/exists")
+  @Operation(summary = "Check if an employee exists by email")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Employees found"),
+      @ApiResponse(responseCode = "404", description = "Employee not found")
+  })
+  public ResponseEntity<Boolean> checkEmailExists(@RequestParam String email) {
+    boolean exists = employeeService.existsByEmail(email);
+    return exists ? ResponseEntity.ok().build()
+        : ResponseEntity.notFound().build();
+  }
+
 }
