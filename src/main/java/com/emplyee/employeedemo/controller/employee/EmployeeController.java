@@ -62,6 +62,19 @@ public class EmployeeController {
     return ResponseEntity.ok(dto);
   }
 
+  @GetMapping("/{email}")
+  @Operation(summary = "Get employee by Email")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Employee found",
+          content = @Content(mediaType = "application/json",
+              schema = @Schema(implementation = Employee.class))),
+      @ApiResponse(responseCode = "404", description = "Employee not found")
+  })
+  public ResponseEntity<EmployeeDTO> getEmployeeByEmail(@PathVariable String email) {
+    EmployeeDTO dto = employeeService.findByEmail(email);
+    return ResponseEntity.ok(dto);
+  }
+
   @DeleteMapping("/{id}")
   @Operation(summary = "Delete employee by ID")
   @ApiResponses(value = {
