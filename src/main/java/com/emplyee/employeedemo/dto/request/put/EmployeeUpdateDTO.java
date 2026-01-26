@@ -1,6 +1,5 @@
 package com.emplyee.employeedemo.dto.request.put;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -12,9 +11,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 public class EmployeeUpdateDTO {
-
-  @NotNull
-  private int id;
 
   private String firstName;
   private String middleName;

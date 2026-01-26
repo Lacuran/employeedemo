@@ -64,8 +64,8 @@ public class EmployeeService {
         .collect(Collectors.toList());
   }
 
-  public EmployeeDTO updateEmployee(EmployeeUpdateDTO dto) {
-    Employee employee = employeeRepository.findById(dto.getId())
+  public EmployeeDTO updateEmployee(int id, EmployeeUpdateDTO dto) {
+    Employee employee = employeeRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Employee not found"));
 
     if (dto.getFirstName() != null) employee.setFirstName(dto.getFirstName());
@@ -121,10 +121,6 @@ public class EmployeeService {
     return employees.stream()
         .map(this::mapToDto)
         .collect(Collectors.toList());
-  }
-
-  public boolean existsByEmail(String email) {
-    return employeeRepository.existsByEmail(email);
   }
 
   private EmployeeDTO mapToDto(Employee saved) {
