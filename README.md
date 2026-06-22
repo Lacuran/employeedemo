@@ -20,7 +20,7 @@ http://localhost:8080/employee-demo/api-docs
       3. ~~Countries~~,
       4. ~~Locations~~,
       5. ~~Departments~~,
-      6. Employee
+      6. ~~Employee~~
    2. Warehouse:
       1. Warehouses,
       2. Categories,
